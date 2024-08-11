@@ -1,14 +1,14 @@
 ---
 development:
   dialect: postgres
-  database: velo_development
-  user: postgres
-  password: postgres
-  host: 127.0.0.1
+  database: verceldb
+  user: default
+  password: EX1h0ALrVSlD
+  host: postgres://default:EX1h0ALrVSlD@ep-small-queen-a4gtvomp-pooler.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require
   pool: 5
 
 test:
-  url: {{envOr "TEST_DATABASE_URL" "postgres://postgres:postgres@127.0.0.1:5432/velo_test?sslmode=disable"}}
+  url: {{envOr "TEST_DATABASE_URL" "postgres://default:EX1h0ALrVSlD@ep-small-queen-a4gtvomp.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require"}}
 
 production:
-  url: {{envOr "DATABASE_URL" "postgres://postgres:postgres@127.0.0.1:5432/velo_production?sslmode=disable"}}
+  url: {{envOr "DATABASE_URL" "postgres://default:EX1h0ALrVSlD@ep-small-queen-a4gtvomp.us-east-1.aws.neon.tech:5432/verceldb?sslmode=require"}}
