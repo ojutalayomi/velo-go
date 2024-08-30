@@ -10,7 +10,7 @@ RUN mkdir -p /src/velo
 WORKDIR /src/velo
 
 # Install Buffalo CLI
-RUN go get -u github.com/gobuffalo/cli/cmd/buffalo
+RUN go install github.com/gobuffalo/cli/cmd/buffalo@latest
 
 RUN export PATH=$PATH:/go/bin
 
