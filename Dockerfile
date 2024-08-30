@@ -10,9 +10,6 @@ WORKDIR /src/velo
 # Install Buffalo CLI
 RUN go install github.com/gobuffalo/cli/cmd/buffalo@latest
 
-# Install Buffalo CLI
-RUN go get -u github.com/gobuffalo/cli/cmd/buffalo
-
 RUN export PATH=$PATH:/go/bin
 
 # this will cache the npm install step, unless package.json changes
