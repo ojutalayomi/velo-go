@@ -7,6 +7,9 @@ ENV GOPROXY http://proxy.golang.org
 RUN mkdir -p /src/velo
 WORKDIR /src/velo
 
+# Install Buffalo CLI
+RUN go install github.com/gobuffalo/cli/cmd/buffalo@latest
+
 # this will cache the npm install step, unless package.json changes
 ADD package.json .
 RUN npm install --no-progress
