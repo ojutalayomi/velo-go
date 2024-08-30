@@ -16,7 +16,7 @@ RUN export PATH=$PATH:/go/bin
 
 # this will cache the npm install step, unless package.json changes
 ADD package.json .
-RUN npm install --no-progress
+RUN npm install
 # Copy the Go Modules manifests
 COPY go.mod go.mod
 COPY go.sum go.sum
