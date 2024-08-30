@@ -1,6 +1,3 @@
-# This is a multi-stage Dockerfile and requires >= Docker 17.05
-# https://docs.docker.com/engine/userguide/eng-image/multistage-build/
-# FROM gobuffalo/buffalo:v0.18.3 as builder
 # Build stage
 FROM golang:1.18-alpine AS builder
 
@@ -9,20 +6,29 @@ ENV GOPROXY http://proxy.golang.org
 RUN mkdir -p /src/velo
 WORKDIR /src/velo
 
+# Install Node.js and npm
+RUN apk add --no-cache nodejs npm
+
 # Install Buffalo CLI
 RUN go install github.com/gobuffalo/cli/cmd/buffalo@latest
 
-RUN export PATH=$PATH:/go/bin
-
-# this will cache the npm install step, unless package.json changes
-ADD package.json .
-# RUN npm install --no-progress
 # Copy the Go Modules manifests
 COPY go.mod go.mod
 COPY go.sum go.sum
+
+# Clear npm cache
+RUN npm cache clean --force
+
+# Set npm registry
+RUN npm config set registry https://registry.npmjs.org/
+
 # cache deps before building and copying source so that we don't need to re-download as much
 # and so that source changes don't invalidate our downloaded layer
 RUN go mod download
+
+# this will cache the npm install step, unless package.json changes
+ADD package.json .
+RUN npm install --no-progress
 
 ADD . .
 RUN buffalo build --static -o /bin/app
